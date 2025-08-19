@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParamsUrl } from "@/@core/presentation/hooks";
 
 import { List, Wrapper, Feedback } from "@/components";
