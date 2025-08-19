@@ -4,10 +4,10 @@ import { Calendar, EventList, EventListHeader } from "./components";
 
 import { useEvent } from "../hooks";
 
-export async function Event() {
+export function Event() {
   const { fetcher } = useEvent();
 
-  const eventsList = await fetcher.loadAll({ id: "1" });
+  const eventsList = [{}] as any;
 
   return (
     <>
