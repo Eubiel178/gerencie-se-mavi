@@ -61,9 +61,9 @@ export function TasksList() {
               suppressHydrationWarning
               dangerouslySetInnerHTML={{
                 __html:
-                  tag !== "todos"
-                    ? `<span>Nenhuama tarefa na categoria <strong>${tag}</strong> encontrada</span>`
-                    : "<span>Nenhuma tarefa encontrada</span>",
+                  tag === "todos" || !!tag
+                    ? "<span>Nenhuma tarefa encontrada</span>"
+                    : `<span>Nenhuama tarefa na categoria <strong>${tag}</strong> encontrada</span>`,
               }}
             />
           </Feedback>
