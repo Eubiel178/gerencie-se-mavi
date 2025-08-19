@@ -28,8 +28,8 @@ const UserContext = createContext<UserContextProps | undefined>(undefined);
 export function UserProvider({ children }: { children: ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
-  const token = localStorage.getItem("token");
-
+  const token =
+    typeof window !== "undefined" ? localStorage.getItem("token") : null;
   const [user, setUser] = useState<IUser>();
   const [tasks, setTasks] = useState<ITask[]>([]);
   const [reminders, setReminders] = useState<IReminder[]>([]);

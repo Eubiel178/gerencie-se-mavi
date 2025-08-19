@@ -33,7 +33,9 @@ export function LogoutButton() {
         }
       }
 
-      await localStorage.removeItem("token");
+      if (typeof window !== "undefined") {
+        localStorage.removeItem("token");
+      }
 
       swalModal({
         icon: "success",
