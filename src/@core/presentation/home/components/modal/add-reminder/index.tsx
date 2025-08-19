@@ -10,8 +10,9 @@ import { Form, Input, Modal, Button, Wrapper } from "@/components";
 import { useUserContext } from "@/providers";
 import { useReminder } from "@/@core/presentation/hooks";
 import { swalModal } from "@/utils";
+import { z } from "zod";
 
-type FormData = Zod.infer<typeof validationSchema>;
+type FormData = z.infer<typeof validationSchema>;
 
 export function AddReminder() {
   const { fetcher } = useReminder();
