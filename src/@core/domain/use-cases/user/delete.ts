@@ -5,5 +5,5 @@ export type DeleteUser = {
 };
 
 export namespace DeleteUser {
-  export type Params = Pick<ITask, "id">;
+  export type Params = Pick<IUser, "_id">;
 }
