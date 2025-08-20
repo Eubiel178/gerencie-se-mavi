@@ -110,9 +110,15 @@ export function Card({
         <Wrapper direction="column" gap="medium">
           <div>
             <h3 className={tv.title()}>{task.title}</h3>
+            {task?.createdAt && (
+              <p className="text-sm  text-gray-600">
+                <span className="font-semibold">criada em:</span>
+                {new Date(task?.createdAt as any)?.toLocaleDateString()}
+              </p>
+            )}
             {task?.endDate && (
-              <p className="text-sm text-gray-600">
-                entrega até:{" "}
+              <p className="text-sm  text-gray-600">
+                <span className="font-semibold"> entrega até:</span>:
                 {new Date(task?.endDate as any)?.toLocaleDateString()}
               </p>
             )}

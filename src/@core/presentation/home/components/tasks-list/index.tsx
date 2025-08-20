@@ -17,10 +17,11 @@ export function TasksList() {
   const tag = paramsUrl?.get("tag");
   const [tasksFiltred, setTasksFiltred] = useState<ITask[]>([]);
   const [selectedTask, setSelectedTask] = useState<ITask | undefined>();
+  const tagIsValid = taskTagValidator(tag);
 
   // Filtra as tarefas dinamicamente sempre que tasks ou tag mudarem
   useEffect(() => {
-    if (taskTagValidator(tag)) {
+    if (tagIsValid) {
       const filtered =
         tasks?.filter(
           (task) => task?.tag?.toLowerCase() === tag?.toLowerCase()
@@ -31,6 +32,7 @@ export function TasksList() {
       setTasksFiltred([...(tasks ?? [])]);
     }
   }, [tasks, tag]);
+
   return (
     <>
       {tasksFiltred && tasksFiltred.length > 0 ? (
@@ -60,10 +62,9 @@ export function TasksList() {
             <p
               suppressHydrationWarning
               dangerouslySetInnerHTML={{
-                __html:
-                  tag === "todos" || !!tag
-                    ? "<span>Nenhuma tarefa encontrada</span>"
-                    : `<span>Nenhuama tarefa na categoria <strong>${tag}</strong> encontrada</span>`,
+                __html: tagIsValid
+                  ? `<span>Nenhuama tarefa na categoria <strong>${tag}</strong> encontrada</span>`
+                  : "<span>Nenhuma tarefa encontrada</span>",
               }}
             />
           </Feedback>

@@ -3,7 +3,7 @@ import { VariantProps, tv } from "tailwind-variants";
 import { useInputRootContext } from "@/providers/InputRootContext";
 
 const inputStyles = tv({
-  base: "w-full border border-solid py-2 px-3 rounded-lg",
+  base: "w-full border border-solid py-2 px-3 rounded-lg resize-none",
 
   variants: {
     incorrect: {

@@ -91,13 +91,16 @@ export function AddReminder() {
 
       <Modal isOpen={isOpen} onClose={closeModal}>
         <Wrapper justify="between" align="center">
-          <h3>Novo Lembrete</h3>
+          <h3 className="">
+            <strong>Novo Lembrete</strong>
+          </h3>
 
           <Button
             color="secondary"
             size="xlarge"
             onClick={closeModal}
             background="transparent"
+            className="p-0"
           >
             <MdClose />
           </Button>
@@ -129,7 +132,7 @@ export function AddReminder() {
               <Input.Wrapper>
                 <Input.FieldTextarea
                   {...register("description")}
-                  rows={5}
+                  rows={7}
                   placeholder="Descrição do Lembrete"
                 />
               </Input.Wrapper>
@@ -140,11 +143,10 @@ export function AddReminder() {
               <Input.Label>Lembrar em</Input.Label>
               <Input.Wrapper>
                 <Input.Date
-                  blockAfterEight
                   {...register("remindAt")}
                   type="date"
                   placeholder="Data/Hora do lembrete"
-                  blockHourLimit={8}
+                  blockAfterHour={9}
                 />
               </Input.Wrapper>
               <Input.HelperText />

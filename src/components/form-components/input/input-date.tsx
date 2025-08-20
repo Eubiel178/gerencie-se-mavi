@@ -16,19 +16,18 @@ const inputStyles = tv({
 
 type InputFieldDateProps = React.ComponentProps<"input"> &
   VariantProps<typeof inputStyles> & {
-    blockAfterEight?: boolean;
-    blockHourLimit?: number; // hora a partir da qual o dia atual será bloqueado (ex: 8)
+    blockAfterHour?: number; // Bloqueia o dia atual após determinado horário
+    enableMinDate?: boolean; // Habilita min date a partir de hoje
   };
 
 export const InputFieldDate = forwardRef<HTMLInputElement, InputFieldDateProps>(
   (
     {
-      type = "text",
       name,
       placeholder,
       className,
-      blockAfterEight = false,
-      blockHourLimit = 0,
+      blockAfterHour,
+      enableMinDate = true,
       ...rest
     },
     ref
@@ -39,32 +38,37 @@ export const InputFieldDate = forwardRef<HTMLInputElement, InputFieldDateProps>(
     const [minDate, setMinDate] = useState<string | undefined>(undefined);
 
     useEffect(() => {
-      if (blockAfterEight) {
-        const now = new Date();
-        const currentHour = now.getHours();
-        const todayStr = now.toISOString().slice(0, 10);
+      const now = new Date();
+      let startDate: Date | undefined = undefined;
 
-        if (currentHour >= blockHourLimit) {
-          const tomorrow = new Date(now);
-          tomorrow.setDate(now.getDate() + 1);
-          const tomorrowStr = tomorrow.toISOString().slice(0, 10);
-          setMinDate(tomorrowStr);
-        } else {
-          setMinDate(todayStr);
-        }
+      // Se enableMinDate = true, mínimo é hoje
+      if (enableMinDate) {
+        startDate = now;
       }
-    }, [blockAfterEight, blockHourLimit]);
+
+      // Se blockAfterHour definido e hora atual >= blockAfterHour, bloqueia hoje
+      if (blockAfterHour !== undefined && now.getHours() >= blockAfterHour) {
+        const tomorrow = new Date(now);
+        tomorrow.setDate(now.getDate() + 1);
+        startDate = tomorrow;
+      }
+
+      // Atualiza minDate só se startDate tiver sido definido
+      setMinDate(startDate?.toISOString().slice(0, 10));
+    }, [enableMinDate, blockAfterHour]);
 
     return (
       <input
         {...rest}
-        className={inputStyles({ className, incorrect })}
-        type={type}
+        className={
+          inputStyles({ incorrect }) + (className ? ` ${className}` : "")
+        }
+        type="date"
         name={name}
         id={name}
         placeholder={placeholder}
         ref={ref}
-        min={blockAfterEight ? minDate : rest.min}
+        min={minDate} // somente hoje em diante se enableMinDate = true
       />
     );
   }

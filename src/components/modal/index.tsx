@@ -4,9 +4,10 @@ import { ReactNode, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { tv } from "tailwind-variants";
 import { Wrapper } from "..";
+import { twMerge } from "tailwind-merge";
 
 const styles = tv({
-  base: "w-[23rem]  bg-gray-100 border-solid border-2 border-gray-300 z-40 relative",
+  base: "w-[90vw] max-w-[30rem]  bg-gray-100 border-solid border-2 border-gray-300 z-40 relative rounded-lg overflow-hidden",
 });
 
 type ModalProps = React.ComponentProps<typeof Wrapper> & {
@@ -15,7 +16,13 @@ type ModalProps = React.ComponentProps<typeof Wrapper> & {
   children: ReactNode;
 };
 
-export const Modal = ({ children, isOpen, onClose, ...rest }: ModalProps) => {
+export const Modal = ({
+  children,
+  isOpen,
+  onClose,
+  className,
+  ...rest
+}: ModalProps) => {
   const [portalElement, setPortalElement] = useState<HTMLElement | null>(null);
 
   useEffect(() => {
@@ -50,7 +57,7 @@ export const Modal = ({ children, isOpen, onClose, ...rest }: ModalProps) => {
     >
       <div onClick={(e) => e.stopPropagation()}>
         <Wrapper
-          className={styles()}
+          className={twMerge(styles(), className)}
           direction="column"
           gap="large"
           padding="large"

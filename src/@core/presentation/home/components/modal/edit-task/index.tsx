@@ -77,7 +77,7 @@ export function EditTask({ selectedTask, setSelectedTask }: IEditTaskProps) {
             color="secondary"
             size="xlarge"
             onClick={closeModal}
-            className="rounded-lg"
+            className="p-0"
           >
             <MdClose />
           </Button>
@@ -95,19 +95,6 @@ export function EditTask({ selectedTask, setSelectedTask }: IEditTaskProps) {
               <Input.HelperText />
             </Input.Root>
 
-            <Input.Root sharedProps={{ error: errors.endDate?.message }}>
-              <Input.Wrapper>
-                <Input.Field
-                  {...register("endDate")}
-                  type="datetime-local"
-                  placeholder="Prazo entrega"
-                  defaultValue={selectedTask?.endDate}
-                />
-              </Input.Wrapper>
-
-              <Input.HelperText />
-            </Input.Root>
-
             <Input.Root sharedProps={{ error: errors.tag?.message }}>
               <Input.Label>Tipo de Tarefa</Input.Label>
 
@@ -115,6 +102,19 @@ export function EditTask({ selectedTask, setSelectedTask }: IEditTaskProps) {
                 <Input.FieldSelect
                   {...register("tag")}
                   optionsArray={taskTags}
+                />
+              </Input.Wrapper>
+
+              <Input.HelperText />
+            </Input.Root>
+
+            <Input.Root sharedProps={{ error: errors.endDate?.message }}>
+              <Input.Label>Prazo entrega</Input.Label>
+
+              <Input.Wrapper>
+                <Input.Date
+                  {...register("endDate")}
+                  defaultValue={selectedTask?.endDate}
                 />
               </Input.Wrapper>
 
@@ -136,8 +136,7 @@ export function EditTask({ selectedTask, setSelectedTask }: IEditTaskProps) {
               <Input.Wrapper>
                 <Input.FieldTextarea
                   {...register("description")}
-                  className="max-h-40"
-                  rows={5}
+                  rows={7}
                   placeholder="Descrição da Tarefa"
                 />
               </Input.Wrapper>

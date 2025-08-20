@@ -86,13 +86,16 @@ export function AddTask() {
 
       <Modal isOpen={isOpen} onClose={closeModal}>
         <Wrapper justify="between" align="center">
-          <h3>Nova Tarefa</h3>
+          <h3>
+            <strong>Nova Tarefa</strong>
+          </h3>
 
           <Button
             color="secondary"
             size="xlarge"
             onClick={closeModal}
             background="transparent"
+            className="p-0"
           >
             <MdClose />
           </Button>
@@ -109,21 +112,6 @@ export function AddTask() {
 
               <Input.HelperText />
             </Input.Root>
-
-            <Input.Root sharedProps={{ error: errors.endDate?.message }}>
-              <Input.Label>Prazo entrega</Input.Label>
-
-              <Input.Wrapper>
-                <Input.Field
-                  {...register("endDate")}
-                  type="datetime-local"
-                  placeholder="Prazo entrega"
-                />
-              </Input.Wrapper>
-
-              <Input.HelperText />
-            </Input.Root>
-
             <Input.Root sharedProps={{ error: errors.tag?.message }}>
               <Input.Label>Tipo de Tarefa</Input.Label>
 
@@ -138,6 +126,19 @@ export function AddTask() {
               <Input.HelperText />
             </Input.Root>
 
+            <Input.Root sharedProps={{ error: errors.endDate?.message }}>
+              <Input.Label>Prazo entrega</Input.Label>
+
+              <Input.Wrapper>
+                <Input.Date
+                  {...register("endDate")}
+                  type="date"
+                  placeholder="Prazo entrega"
+                />
+              </Input.Wrapper>
+
+              <Input.HelperText />
+            </Input.Root>
             <Input.Root sharedProps={{ error: errors.title?.message }}>
               <Input.Wrapper>
                 <Input.Field
@@ -148,13 +149,11 @@ export function AddTask() {
 
               <Input.HelperText />
             </Input.Root>
-
             <Input.Root sharedProps={{ error: errors.description?.message }}>
               <Input.Wrapper>
                 <Input.FieldTextarea
                   {...register("description")}
-                  className="max-h-40"
-                  rows={5}
+                  rows={7}
                   placeholder="Descrição da Tarefa"
                 />
               </Input.Wrapper>

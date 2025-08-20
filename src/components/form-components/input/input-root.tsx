@@ -2,7 +2,7 @@ import { InputRootProvider, SharedProps } from "@/providers/InputRootContext";
 import { VariantProps, tv } from "tailwind-variants";
 
 const rootStyles = tv({
-  base: "flex gap-2",
+  base: "flex gap-1",
 
   variants: {
     direction: {
