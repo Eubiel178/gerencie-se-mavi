@@ -1,4 +1,3 @@
-// public/sw.js
 self.addEventListener("push", (event) => {
   if (!event.data) return;
 
@@ -6,22 +5,24 @@ self.addEventListener("push", (event) => {
 
   const options = {
     body: message,
-    icon: "/favi-black.png", // opcional
-    badge: "/favi-black.png", // opcional
+    icon: "/favi-black.png",
+    badge: "/favi-black.png",
   };
 
-  // Mostra a notificação
-  event.waitUntil(self.registration.showNotification(title, options));
-
-  // Envia mensagem para todas as janelas abertas do site
   event.waitUntil(
-    clients
-      .matchAll({ type: "window", includeUncontrolled: true })
-      .then((windows) => {
-        windows.forEach((win) => {
-          win.postMessage({ type: "playSound" }); // mensagem para tocar som
-        });
-      })
+    (async () => {
+      // Mostra a notificação
+      await self.registration.showNotification(title, options);
+
+      // Envia mensagem para todas as janelas abertas do site
+      const windows = await clients.matchAll({
+        type: "window",
+        includeUncontrolled: true,
+      });
+      windows.forEach((win) => {
+        win.postMessage({ type: "playSound" });
+      });
+    })()
   );
 });
 
