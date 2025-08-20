@@ -13,8 +13,12 @@ export async function GET(request: NextRequest) {
     console.log("Eu estou executando");
 
     const response = await fetch(process.env.apiLocal + "send-reminders");
+    console.log(response);
 
-    return NextResponse.json({ success: true }, { status: 200 });
+    return NextResponse.json(
+      { success: true, url: process.env.apiLocal + "send-reminders" },
+      { status: 200 }
+    );
   } catch (err: any) {
     return NextResponse.json(
       { success: false, error: err.message },
