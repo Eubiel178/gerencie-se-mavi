@@ -1,25 +1,18 @@
-// export default async function handler(req: any, res: any) {
-//   try {
-//     const response = await fetch(process.env.apiLocal + "send-reminders");
-//     const data = await response.json();
-
-//     res.status(200).json({ success: true, data });
-//   } catch (err: any) {
-//     res.status(500).json({ success: false, error: err.message });
-//   }
-// }
 import { NextResponse } from "next/server";
 
-export async function GET(req: any, res: any) {
+export async function GET() {
   try {
     console.log(process.env.apiLocal + "send-reminders");
-    console.log("eu to wexecultanda");
+    console.log("Eu estou executando");
 
     const response = await fetch(process.env.apiLocal + "send-reminders");
     const data = await response.json();
 
-    res.status(200).json({ success: true, data });
+    return NextResponse.json({ success: true, data }, { status: 200 });
   } catch (err: any) {
-    res.status(500).json({ success: false, error: err.message });
+    return NextResponse.json(
+      { success: false, error: err.message },
+      { status: 500 }
+    );
   }
 }
