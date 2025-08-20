@@ -146,7 +146,7 @@ export function AddReminder() {
                   {...register("remindAt")}
                   type="date"
                   placeholder="Data/Hora do lembrete"
-                  blockAfterHour={12}
+                  blockAfterHour={10}
                 />
               </Input.Wrapper>
               <Input.HelperText />
