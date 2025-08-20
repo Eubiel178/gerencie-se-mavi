@@ -6,7 +6,7 @@ import { useInputRootContext } from "@/providers/InputRootContext";
 import { twMerge } from "tailwind-merge";
 
 const selectStyles = tv({
-  base: "appearance-none w-full border border-solid border-stone-200 p-2 rounded-lg",
+  base: "appearance-none w-full border border-solid border-stone-200 py-2 px-3 rounded-lg",
 
   variants: {
     incorrect: {

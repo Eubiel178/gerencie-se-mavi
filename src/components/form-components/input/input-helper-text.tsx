@@ -4,7 +4,7 @@ import { useInputRootContext } from "@/providers/InputRootContext";
 import { VariantProps, tv } from "tailwind-variants";
 
 const textStyles = tv({
-  base: "text-red-500 text-xs ",
+  base: "text-red-500 text-xs py-2 px-3",
 });
 
 type InputHelperTextProps = React.ComponentProps<"p"> &

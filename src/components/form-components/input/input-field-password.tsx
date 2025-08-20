@@ -9,7 +9,7 @@ import { InputButton } from "./Input-button";
 import { InputIcon } from "./input-icon";
 
 const inputStyles = tv({
-  base: "w-full border border-solid border-stone-200 p-2 rounded-l-lg ",
+  base: "w-full border border-solid border-stone-200 py-2 px-3 rounded-l-lg ",
 
   variants: {
     incorrect: {

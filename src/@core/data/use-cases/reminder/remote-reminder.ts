@@ -13,7 +13,7 @@ export class RemoteReminder
     return await this.http.request({
       url: "reminders",
       method: "post",
-      body: { ...params, isCron: false },
+      body: params,
       headers: {
         "Content-Type": "application/json",
       },

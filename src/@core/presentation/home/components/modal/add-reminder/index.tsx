@@ -139,10 +139,12 @@ export function AddReminder() {
             <Input.Root sharedProps={{ error: errors.remindAt?.message }}>
               <Input.Label>Lembrar em</Input.Label>
               <Input.Wrapper>
-                <Input.Field
+                <Input.Date
+                  blockAfterEight
                   {...register("remindAt")}
                   type="date"
                   placeholder="Data/Hora do lembrete"
+                  blockHourLimit={8}
                 />
               </Input.Wrapper>
               <Input.HelperText />

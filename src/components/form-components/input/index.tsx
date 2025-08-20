@@ -9,6 +9,7 @@ import { InputRoot } from "./input-root";
 import { InputWrapper } from "./input-wrapper";
 import { InputColor } from "./input-color";
 import { InputField } from "./input-field";
+import { InputFieldDate } from "./input-date";
 
 export const Input = {
   Root: InputRoot,
@@ -18,6 +19,7 @@ export const Input = {
   FieldPassword: InputFieldPassword,
   FieldSelect: InputFieldSelect,
   FieldTextarea: InputFieldTextarea,
+  Date: InputFieldDate,
   Color: InputColor,
   Button: InputButton,
   Icon: InputIcon,

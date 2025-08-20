@@ -1,7 +1,7 @@
 import { VariantProps, tv } from "tailwind-variants";
 
 const styles = tv({
-  base: "bg-stone-200 text-xl",
+  base: "bg-stone-200 text-xl py-2 ",
 });
 
 type InputIconProps = React.ComponentProps<"p"> & VariantProps<typeof styles>;

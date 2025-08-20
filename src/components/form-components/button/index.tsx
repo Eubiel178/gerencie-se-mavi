@@ -1,7 +1,7 @@
 import { VariantProps, tv } from "tailwind-variants";
 
 const buttonStyles = tv({
-  base: "text-white p-2 border-hidden rounded-lg ",
+  base: "text-white py-2 px-3 border-hidden rounded-lg ",
 
   variants: {
     color: {
