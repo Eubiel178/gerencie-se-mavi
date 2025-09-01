@@ -36,7 +36,7 @@ export class RemoteUser
 
     const user = response?.data?._doc;
 
-    if (user._id && typeof window !== "undefined") {
+    if (user?._id && typeof window !== "undefined") {
       localStorage.setItem("token", user._id);
     }
 

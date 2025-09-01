@@ -6,6 +6,8 @@ import { useParamsUrl } from "@/@core/presentation/hooks/use-params-url";
 import { Input, Wrapper } from "@/components";
 import { AddReminder, AddTask } from "../modal";
 import { taskTags } from "../../utils";
+import Link from "next/link";
+import { buttonStyles } from "@/components/form-components/button";
 
 export function TasksListHeader() {
   const router = useRouter();
@@ -37,7 +39,16 @@ export function TasksListHeader() {
       </Input.Root>
 
       <div className="h-full items-stretch flex gap-2">
-        <AddReminder />
+        <Link
+          // type="button"
+          // onClick={() => setIsOpen(true)}
+          className={buttonStyles({
+            className: "rounded-lg text-sm bg-blue-500",
+          })}
+          href="/home/lembrete"
+        >
+          Adicionar lembrete
+        </Link>
         <AddTask />
       </div>
     </Wrapper>

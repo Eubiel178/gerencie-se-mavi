@@ -1,6 +1,6 @@
 import { VariantProps, tv } from "tailwind-variants";
 
-const buttonStyles = tv({
+export const buttonStyles = tv({
   base: "text-white py-2 px-3 border-hidden rounded-lg ",
 
   variants: {

@@ -11,7 +11,7 @@ import {
   ReactNode,
 } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { useTask, useUser } from "@/@core/presentation/hooks";
+import { useReminder, useTask, useUser } from "@/@core/presentation/hooks";
 
 interface UserContextProps {
   user?: IUser;
@@ -36,6 +36,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
 
   const handleUser = useUser();
   const handleTask = useTask();
+  const handleReminder = useReminder();
 
   // Função para buscar tasks do usuário
   const mutate = async () => {
@@ -43,8 +44,12 @@ export function UserProvider({ children }: { children: ReactNode }) {
 
     try {
       const taskData = await handleTask.fetcher.loadAll({ userID: user?._id });
+      const reminderData = await handleReminder.fetcher.loadAll({
+        userID: user?._id,
+      });
 
       setTasks([...taskData]);
+      setReminders([...reminderData]);
     } catch (err) {
       console.error("Erro ao buscar tasks:", err);
     }

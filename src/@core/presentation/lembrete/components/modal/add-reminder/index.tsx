@@ -11,7 +11,6 @@ import { useUserContext } from "@/providers";
 import { useReminder } from "@/@core/presentation/hooks";
 import { swalModal } from "@/utils";
 import { z } from "zod";
-import Link from "next/link";
 
 type FormData = z.infer<typeof validationSchema>;
 
@@ -82,6 +81,14 @@ export function AddReminder() {
 
   return (
     <>
+      <Button
+        type="button"
+        onClick={() => setIsOpen(true)}
+        className="rounded-lg text-sm bg-green-500"
+      >
+        Novo Lembrete
+      </Button>
+
       <Modal isOpen={isOpen} onClose={closeModal}>
         <Wrapper justify="between" align="center">
           <h3 className="">

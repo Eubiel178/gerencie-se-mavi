@@ -22,14 +22,14 @@ export class RemoteReminder
 
   async loadAll(params: domain.LoadAllReminders.Params) {
     return await this.http.request({
-      url: `reminders/user-id/${params.userID}`,
+      url: `reminders-list/${params.userID}`,
       method: "get",
     });
   }
 
   async delete(params: domain.DeleteReminder.Params) {
     return await this.http.request({
-      url: `reminders/reminder-id/${params._id}`,
+      url: `reminders/${params._id}`,
       method: "delete",
     });
   }

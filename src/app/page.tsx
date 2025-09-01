@@ -10,7 +10,7 @@ const LandingPage = () => {
     router.replace("/login");
   }, [router]);
 
-  return null; // ou <> </> se preferir
+  return <></>; // ou <> </> se preferir
 };
 
 export default LandingPage;
