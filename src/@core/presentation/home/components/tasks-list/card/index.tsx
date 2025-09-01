@@ -11,11 +11,10 @@ import { useUserContext } from "@/providers";
 const styles = tv({
   slots: {
     container:
-      "bg-white flex flex-col flex-1 min-h-[300px] shadow rounded-lg overflow-hidden",
-    title: "text-base font-medium",
+      "bg-white flex flex-col flex-1 shadow rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-200",
+    title: "text-lg font-semibold text-gray-800",
   },
 });
-
 export function Card({
   task,
   setSelectedTask,
@@ -66,79 +65,69 @@ export function Card({
 
   return (
     <li key={task._id} className={tv.container({})}>
-      <Wrapper
-        align="start"
-        background="dark"
-        className="h-32 "
-        style={{
-          background: task?.color,
-        }}
+      {/* Header colorido */}
+      <div
+        className="flex justify-between items-center px-4 py-2"
+        style={{ background: task.color || "#4f46e5" }}
       >
-        <Wrapper flex="flex1" justify="between" align="center" padding="small">
-          <Paragraph size="small" className="text-white">
-            #{task.tag}
-          </Paragraph>
+        <Paragraph size="small" className="text-white font-medium">
+          #{task.tag}
+        </Paragraph>
+        <div className="flex gap-2">
+          <Button
+            color="primary"
+            background="transparent"
+            size="xlarge"
+            onClick={() => setSelectedTask(task)}
+            className="text-white hover:text-gray-200"
+          >
+            <FaEdit />
+          </Button>
+          <Button
+            color="danger"
+            background="transparent"
+            size="xlarge"
+            onClick={handleTaskRemove}
+            className="hover:text-red-700 text-red-500"
+          >
+            <FaTrash />
+          </Button>
+        </div>
+      </div>
 
-          <Wrapper gap="medium">
-            <Button
-              color="primary"
-              background="transparent"
-              size="xlarge"
-              onClick={() => setSelectedTask(task)}
+      {/* Conteúdo */}
+      <div className="p-4 flex flex-col gap-3">
+        <h3 className={tv.title()}>{task.title}</h3>
+
+        {/* Datas */}
+        <div className="flex flex-col gap-1 text-sm text-gray-600">
+          {task?.createdAt && (
+            <p>
+              <span className="font-semibold">Criada em:</span>{" "}
+              {new Date(task.createdAt).toLocaleDateString("pt-BR")}
+            </p>
+          )}
+          {task?.endDate && (
+            <p>
+              <span className="font-semibold">Entrega até:</span>{" "}
+              {new Date(task.endDate).toLocaleDateString("pt-BR")}
+            </p>
+          )}
+        </div>
+
+        {/* Descrição */}
+        <Paragraph color="secondary" size="small">
+          {descriptionToShow}
+          {task.description.length > MAX_LENGTH && (
+            <button
+              className="ml-1 text-blue-500 underline hover:text-blue-700"
+              onClick={() => setShowFullDescription(!showFullDescription)}
             >
-              <FaEdit />
-            </Button>
-
-            <Button
-              color="danger"
-              background="transparent"
-              size="xlarge"
-              onClick={handleTaskRemove}
-            >
-              <FaTrash />
-            </Button>
-          </Wrapper>
-        </Wrapper>
-      </Wrapper>
-
-      <Wrapper
-        direction="column"
-        justify="between"
-        flex="flex1"
-        padding="medium"
-      >
-        <Wrapper direction="column" gap="medium">
-          <div>
-            <h3 className={tv.title()}>{task.title}</h3>
-            {task?.createdAt && (
-              <p className="text-sm  text-gray-600">
-                <span className="font-semibold">criada em:</span>
-                {new Date(task?.createdAt as any)?.toLocaleDateString()}
-              </p>
-            )}
-            {task?.endDate && (
-              <p className="text-sm  text-gray-600">
-                <span className="font-semibold"> entrega até:</span>:
-                {new Date(task?.endDate as any)?.toLocaleDateString()}
-              </p>
-            )}
-          </div>
-
-          <Paragraph color="secondary" size="small">
-            {descriptionToShow}
-            {task.description.length > MAX_LENGTH && (
-              <button
-                className="ml-1 text-blue-500 underline"
-                onClick={() => setShowFullDescription(!showFullDescription)}
-              >
-                {showFullDescription ? "mostrar menos" : "ler mais"}
-              </button>
-            )}
-          </Paragraph>
-        </Wrapper>
-
-        {/* <DefaultLink href={"/home/" + task._id}>Acessar</DefaultLink> */}
-      </Wrapper>
+              {showFullDescription ? "mostrar menos" : "ler mais"}
+            </button>
+          )}
+        </Paragraph>
+      </div>
     </li>
   );
 }

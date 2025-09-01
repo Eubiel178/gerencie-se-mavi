@@ -49,6 +49,12 @@ button{
   line-height: 1;
 }
 
+
+.tasks-list-header>a,button{
+  white-space: nowrap;
+}
+
+
 @media screen and (max-width: 400px) {
   .tasks-list-header{
     gap: 10px;
@@ -59,6 +65,19 @@ button{
     width: 100%;
   }
 }
+
+
+@media screen and (max-width: 330px) {
+  .tasks-list-header{
+    gap: 10px;
+    flex-direction: column;
+  }
+
+  .tasks-list-header >div:last-child{
+flex-direction:  column;
+  }
+}
+
 
 @media screen and (max-width: 550px) {
   .tasks-list{

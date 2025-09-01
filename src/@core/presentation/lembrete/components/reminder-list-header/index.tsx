@@ -18,7 +18,8 @@ export function TasksListHeader() {
           // type="button"
           // onClick={() => setIsOpen(true)}
           className={buttonStyles({
-            className: "rounded-lg text-sm bg-blue-500",
+            className:
+              "rounded-lg text-sm bg-blue-500 flex w-full justify-center items-center",
           })}
           href="/home/"
         >
