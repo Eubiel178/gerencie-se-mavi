@@ -27,17 +27,16 @@ export function Card({ reminder }: { reminder: IReminder }) {
   const remindAt = formatarDataISOParaBR(reminder?.remindAt);
 
   // Verifica se o lembrete expirou (comparando apenas datas)
-  function isDataPassada(remindAt?: string, notificado?: boolean) {
+  function isDataPassada() {
     if (!remindAt) return false;
     const hoje = formatarDataISOParaBR(new Date().toISOString());
-    const lembrete = formatarDataISOParaBR(remindAt);
     console.log(hoje, "hj");
-    console.log(lembrete, "lembrete");
+    console.log(remindAt, "lembrete");
 
-    return lembrete < hoje && !notificado;
+    return remindAt < hoje && !reminder?.notificado;
   }
 
-  const passouData = isDataPassada(reminder?.remindAt, reminder?.notificado);
+  const passouData = isDataPassada();
 
   async function handleRemindRemove() {
     try {
