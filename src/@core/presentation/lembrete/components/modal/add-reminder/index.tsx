@@ -141,7 +141,7 @@ export function AddReminder() {
             <Input.Root sharedProps={{ error: errors.remindAt?.message }}>
               <Input.Label>Lembrar em</Input.Label>
               <Input.Wrapper>
-                <Input.Date type="date" {...register("remindAt")} />
+                <Input.Field type="date" {...register("remindAt")} />
               </Input.Wrapper>
               <Input.HelperText />
             </Input.Root>
