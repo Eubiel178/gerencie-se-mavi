@@ -16,7 +16,7 @@ type FormData = z.infer<typeof validationSchema>;
 
 export function AddReminder() {
   const { fetcher } = useReminder();
-  const { user, setReminders } = useUserContext();
+  const { user, mutate } = useUserContext();
   const [isOpen, setIsOpen] = useState(false);
 
   const {
@@ -62,8 +62,7 @@ export function AddReminder() {
       };
 
       await fetcher.create(payload);
-
-      setReminders((prev) => [payload, ...prev]);
+      await mutate();
 
       swalModal({
         icon: "success",

@@ -5,5 +5,8 @@ export type CreateReminder = {
 };
 
 export namespace CreateReminder {
-  export type Params = Omit<IReminder, "_id">;
+  export type Params = Omit<
+    IReminder,
+    "_id" | "notificado" | "remindedAt" | "createdAt"
+  >;
 }
