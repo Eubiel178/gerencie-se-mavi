@@ -76,11 +76,12 @@ export function AddTask() {
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Continuar sem notificações!",
-        cancelButtonText: "Permitir notificações!",
+        confirmButtonText: "Permitir notificações!",
+        cancelButtonText: "Continuar sem notificações!",
       });
+      console.log(isConfirmed);
 
-      if (!isConfirmed) {
+      if (isConfirmed) {
         permission = await Notification.requestPermission();
       }
     }
