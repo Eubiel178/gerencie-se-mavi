@@ -53,8 +53,13 @@ export const InputFieldDate = forwardRef<HTMLInputElement, InputFieldDateProps>(
         startDate = tomorrow;
       }
 
-      // Atualiza minDate só se startDate tiver sido definido
-      setMinDate(startDate?.toISOString().slice(0, 10));
+      if (startDate) {
+        // Ajusta para o fuso local, evitando deslocamento de 1 dia
+        const year = startDate.getFullYear();
+        const month = String(startDate.getMonth() + 1).padStart(2, "0");
+        const day = String(startDate.getDate()).padStart(2, "0");
+        setMinDate(`${year}-${month}-${day}`);
+      }
     }, [enableMinDate, blockAfterHour]);
 
     return (

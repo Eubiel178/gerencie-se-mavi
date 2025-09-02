@@ -9,5 +9,5 @@ export interface ITask {
   endDate?: string;
   urgency?: string;
   isFinished?: boolean;
-  createdAt?: Date;
+  createdAt?: string;
 }

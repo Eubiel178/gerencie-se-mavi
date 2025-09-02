@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useReminder } from "@/@core/presentation/hooks/";
-import { swalModal } from "@/utils";
+import { dateFormatedToFront, swalModal } from "@/utils";
 import { useUserContext } from "@/providers";
 import { IReminder } from "@/@core/domain";
 
@@ -15,14 +15,18 @@ export function Card({ reminder }: { reminder: IReminder }) {
       ? reminder?.description.slice(0, MAX_LENGTH) + "..."
       : reminder?.description;
 
-  const createdAt = new Date(reminder?.createdAt).toLocaleDateString("pt-BR"); // só data
-  const remindAt = new Date(reminder?.remindAt).toLocaleDateString("pt-BR"); // só data
-  const remindedAt = reminder?.remindedAt
-    ? new Date(reminder.remindedAt).toLocaleString("pt-BR", {
-        dateStyle: "short",
-        timeStyle: "short",
-      })
-    : null;
+  // const createdAt = new Date(reminder?.createdAt).toLocaleDateString("pt-BR"); // só data
+  function formatarDataISOParaBR(isoString?: string) {
+    if (!isoString) return "";
+    const data = new Date(isoString);
+    const dia = String(data.getUTCDate()).padStart(2, "0");
+    const mes = String(data.getUTCMonth() + 1).padStart(2, "0");
+    const ano = data.getUTCFullYear();
+    return `${dia}/${mes}/${ano}`;
+  }
+
+  // Uso:
+  const remindAt = formatarDataISOParaBR(reminder?.remindAt);
 
   async function handleRemindRemove() {
     try {
@@ -92,17 +96,18 @@ export function Card({ reminder }: { reminder: IReminder }) {
         {/* Datas */}
         <div className="mt-3 text-xs text-gray-600 space-y-1">
           <p>
-            📅 <span className="font-medium">Criado em:</span> {createdAt}
+            📅 <span className="font-medium">Criado em:</span>{" "}
+            {dateFormatedToFront(reminder?.createdAt, true)}
           </p>
           {!reminder.notificado && (
             <p>
               ⏰ <span className="font-medium">Lembrar em:</span> {remindAt}
             </p>
           )}
-          {reminder.notificado && remindedAt && (
+          {reminder.notificado && reminder?.remindedAt && (
             <p>
               ✅ <span className="font-medium">Notificado em:</span>{" "}
-              {remindedAt}
+              {dateFormatedToFront(reminder?.remindedAt, true)}
             </p>
           )}
         </div>

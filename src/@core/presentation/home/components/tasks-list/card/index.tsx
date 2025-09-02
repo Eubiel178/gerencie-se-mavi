@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useTask } from "@/@core/presentation/hooks/use-task";
 import { Button, Paragraph, Wrapper, DefaultLink } from "@/components";
 import { ITask } from "@/@core/domain";
-import { swalModal } from "@/utils";
+import { dateFormatedToFront, swalModal } from "@/utils";
 import { useUserContext } from "@/providers";
 
 const styles = tv({
@@ -94,23 +94,21 @@ export function Card({
           </Button>
         </div>
       </div>
-
       {/* Conteúdo */}
       <div className="p-4 flex flex-col gap-3">
         <h3 className={tv.title()}>{task.title}</h3>
-
         {/* Datas */}
         <div className="flex flex-col gap-1 text-sm text-gray-600">
           {task?.createdAt && (
             <p>
               <span className="font-semibold">Criada em:</span>{" "}
-              {new Date(task.createdAt).toLocaleDateString("pt-BR")}
+              {dateFormatedToFront(task?.createdAt)}
             </p>
           )}
           {task?.endDate && (
             <p>
               <span className="font-semibold">Entrega até:</span>{" "}
-              {new Date(task.endDate).toLocaleDateString("pt-BR")}
+              {dateFormatedToFront(task.endDate)}
             </p>
           )}
         </div>
