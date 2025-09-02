@@ -57,7 +57,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
 
   // Busca dados do usuário quando o token estiver disponível
   useEffect(() => {
-    if (!token && pathname == "/home") {
+    if (!token && (pathname == "/home" || pathname == "/home/lembrete")) {
       router.push("/login");
     }
 
