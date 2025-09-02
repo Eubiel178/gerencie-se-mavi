@@ -8,13 +8,14 @@ export function Card({ reminder }: { reminder: IReminder }) {
   const { fetcher } = useReminder();
   const { mutate } = useUserContext();
   const [showFullDescription, setShowFullDescription] = useState(false);
-  const MAX_LENGTH = 100;
 
+  const MAX_LENGTH = 100;
   const descriptionToShow =
     !showFullDescription && reminder?.description.length > MAX_LENGTH
       ? reminder?.description.slice(0, MAX_LENGTH) + "..."
       : reminder?.description;
 
+  // const createdAt = new Date(reminder?.createdAt).toLocaleDateString("pt-BR"); // só data
   function formatarDataISOParaBR(isoString?: string) {
     if (!isoString) return "";
     const data = new Date(isoString);
@@ -24,19 +25,8 @@ export function Card({ reminder }: { reminder: IReminder }) {
     return `${dia}/${mes}/${ano}`;
   }
 
+  // Uso:
   const remindAt = formatarDataISOParaBR(reminder?.remindAt);
-
-  // Verifica se o lembrete expirou (comparando apenas datas)
-  function isDataPassada() {
-    if (!remindAt) return false;
-    const hoje = formatarDataISOParaBR(new Date().toISOString());
-    console.log(hoje, "hj");
-    console.log(remindAt, "lembrete");
-
-    return remindAt < hoje && !reminder?.notificado;
-  }
-
-  const passouData = isDataPassada();
 
   async function handleRemindRemove() {
     try {
@@ -73,9 +63,7 @@ export function Card({ reminder }: { reminder: IReminder }) {
         className={`relative p-4 rounded-lg shadow mb-3 flex flex-col h-full ${
           reminder.notificado
             ? "bg-green-100 border border-green-300"
-            : passouData
-              ? "bg-red-100 border border-red-300"
-              : "bg-yellow-100 border border-yellow-300"
+            : "bg-yellow-100 border border-yellow-300"
         }`}
       >
         {/* Botão X */}
@@ -85,27 +73,21 @@ export function Card({ reminder }: { reminder: IReminder }) {
         >
           ✕
         </button>
+
         {/* Título */}
         <h3 className="font-semibold text-lg mb-1">{reminder.title}</h3>
+
         {/* Descrição */}
         <p
           className={`text-sm ${
-            reminder.notificado
-              ? "text-green-700"
-              : passouData
-                ? "text-red-700"
-                : "text-yellow-700"
+            reminder.notificado ? "text-green-700" : "text-yellow-700"
           }`}
         >
           {descriptionToShow}
           {reminder.description.length > MAX_LENGTH && (
             <button
               className={`ml-1 underline ${
-                reminder.notificado
-                  ? "text-green-600"
-                  : passouData
-                    ? "text-red-600"
-                    : "text-yellow-600"
+                reminder.notificado ? "text-green-600" : "text-yellow-600"
               }`}
               onClick={() => setShowFullDescription(!showFullDescription)}
             >
@@ -113,44 +95,36 @@ export function Card({ reminder }: { reminder: IReminder }) {
             </button>
           )}
         </p>
+
         {/* Datas */}
         <div className="mt-3 text-xs text-gray-600 space-y-1">
           <p>
             📅 <span className="font-medium">Criado em:</span>{" "}
             {dateFormatedToFront(reminder?.createdAt, true)}
           </p>
-          <p>
-            ⏰{" "}
-            <span className="font-medium">Data programada para lembrar:</span>{" "}
-            {remindAt}
-          </p>
+          {!reminder.notificado && (
+            <p>
+              ⏰ <span className="font-medium">Lembrar em:</span> {remindAt}
+            </p>
+          )}
           {reminder.notificado && reminder?.remindedAt && (
             <p>
               ✅ <span className="font-medium">Notificado em:</span>{" "}
               {dateFormatedToFront(reminder?.remindedAt, true)}
             </p>
           )}
-          {passouData && !reminder.notificado && (
-            <p className="text-red-700 font-medium">
-              ⚠️ Lembrete expirado! Data passou.
-            </p>
-          )}
         </div>
+
         {/* Status */}
+        <p className="mt-2"></p>
         <small
           className={`block mt-auto font-medium ${
-            reminder.notificado
-              ? "text-green-800"
-              : passouData
-                ? "text-red-800"
-                : "text-yellow-800"
+            reminder.notificado ? "text-green-800" : "text-yellow-800"
           }`}
         >
           {reminder.notificado
             ? "✅ Já foi notificado"
-            : passouData
-              ? "❌ Não foi lembrado! Data passou"
-              : "⏳ Aguardando notificação"}
+            : "⏳ Aguardando notificação"}
         </small>
       </div>
     </li>
