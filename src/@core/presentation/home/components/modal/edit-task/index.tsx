@@ -13,12 +13,13 @@ import { Form, Modal, Input, Button, Wrapper } from "@/components";
 
 import { FormData, IEditTaskProps } from "../interfaces";
 import { taskTags } from "../../../utils";
-import { useTask } from "@/@core/presentation/hooks";
+import { useReminder, useTask } from "@/@core/presentation/hooks";
 import { swalModal } from "@/utils";
 import { useUserContext } from "@/providers";
 
 export function EditTask({ selectedTask, setSelectedTask }: IEditTaskProps) {
   const { fetcher } = useTask();
+  const reminder = useReminder();
   const { mutate } = useUserContext();
   console.log(selectedTask, "selecione taskes");
 
@@ -48,6 +49,14 @@ export function EditTask({ selectedTask, setSelectedTask }: IEditTaskProps) {
       };
 
       await fetcher.edit(payload);
+      await reminder.fetcher.edit({
+        title: payload.title,
+        description: payload.description,
+        remindAt: payload.endDate,
+        remindedAt: null as any,
+        notificado: false,
+        taskId: selectedTask?._id,
+      } as any);
       await mutate();
 
       swalModal({

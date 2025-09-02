@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import { MdClose } from "react-icons/md";
 import { useForm } from "react-hook-form";
-import { useTask } from "@/@core/presentation/hooks";
+import { useReminder, useTask } from "@/@core/presentation/hooks";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { validationSchema } from "../task-schema";
@@ -18,6 +18,7 @@ import { swalModal } from "@/utils";
 
 export function AddTask() {
   const { fetcher } = useTask();
+  const reminder = useReminder();
   const { user, mutate } = useUserContext();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -43,8 +44,46 @@ export function AddTask() {
     reset({});
   }
 
+  //   if (isSubmitting) return;
+  // let permission = Notification.permission;
+
+  // if (permission !== "granted") {
+  //   swalModal({
+  //     icon: "error",
+  //     title: "Voce precisa permitir notificacoes para criar um lembrete!",
+  //   });
+
+  //   permission = await Notification.requestPermission();
+  // }
+
+  // if (permission !== "granted") return;
+
+  // try {
+  //   const payload = {
+  //     ...data,
+  //     userID: user?._id || "",
+  //   };
+
   async function handleOnSubmit(data: FormData) {
     if (isSubmitting) return;
+    let permission = Notification.permission;
+
+    if (permission !== "granted") {
+      const { isConfirmed } = await swalModal({
+        title: "Permissao de notificacoes",
+        text: `Para receber notificações desta tarefa, você precisa permitir o envio delas. Deseja continuar sem notificações?`,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Continuar sem notificações!",
+        cancelButtonText: "Permitir notificações!",
+      });
+
+      if (!isConfirmed) {
+        permission = await Notification.requestPermission();
+      }
+    }
 
     try {
       const payload = {
@@ -52,8 +91,18 @@ export function AddTask() {
         userID: user?._id || "",
         isFinished: false,
       };
+      console.log(data.endDate, "data final");
 
-      await fetcher.create(payload);
+      const response = await fetcher.create(payload);
+      console.log(response);
+
+      await reminder.fetcher.create({
+        userID: user?._id,
+        title: data.title,
+        description: data.description,
+        remindAt: data.endDate,
+        taskId: response?.task._id,
+      } as any);
       mutate();
 
       swalModal({

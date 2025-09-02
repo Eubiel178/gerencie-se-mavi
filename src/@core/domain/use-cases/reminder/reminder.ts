@@ -8,4 +8,5 @@ export interface IReminder {
   createdAt: string;
   notificado?: boolean;
   remindedAt?: string;
+  taskId?: string;
 }

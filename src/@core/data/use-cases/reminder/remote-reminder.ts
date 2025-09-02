@@ -9,6 +9,17 @@ export class RemoteReminder
 {
   constructor(private http: IHttpAdpter) {}
 
+  async edit(params: domain.EditReminder.Params) {
+    return await this.http.request({
+      url: `reminders/${params?.taskId}`,
+      method: "put",
+      body: params,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  }
+
   async create(params: domain.CreateReminder.Params) {
     return await this.http.request({
       url: "reminders",
