@@ -29,19 +29,12 @@ export function Card({ reminder }: { reminder: IReminder }) {
   // Verifica se o lembrete expirou (comparando apenas datas)
   function isDataPassada(remindAt?: string, notificado?: boolean) {
     if (!remindAt) return false;
-    const hoje = new Date();
-    const lembrete = new Date(remindAt);
-    const hojeSomenteData = new Date(
-      hoje.getFullYear(),
-      hoje.getMonth(),
-      hoje.getDate()
-    );
-    const lembreteSomenteData = new Date(
-      lembrete.getFullYear(),
-      lembrete.getMonth(),
-      lembrete.getDate()
-    );
-    return lembreteSomenteData < hojeSomenteData && !notificado;
+    const hoje = formatarDataISOParaBR(new Date().toISOString());
+    const lembrete = formatarDataISOParaBR(remindAt);
+    console.log(hoje, "hj");
+    console.log(lembrete, "lembrete");
+
+    return lembrete < hoje && !notificado;
   }
 
   const passouData = isDataPassada(reminder?.remindAt, reminder?.notificado);
