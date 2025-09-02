@@ -4,7 +4,7 @@ import { useRouter, usePathname } from "next/navigation";
 import { useParamsUrl } from "@/@core/presentation/hooks/use-params-url";
 
 import { Input, Wrapper } from "@/components";
-import { AddReminder, AddTask } from "../modal";
+import { AddTask } from "../modal";
 import { taskTags } from "../../utils";
 import Link from "next/link";
 import { buttonStyles } from "@/components/form-components/button";
