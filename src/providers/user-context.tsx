@@ -49,7 +49,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
       });
 
       setTasks([...taskData]);
-      setReminders([...reminderData]);
+      setReminders(reminderData);
     } catch (err) {
       console.error("Erro ao buscar tasks:", err);
     }

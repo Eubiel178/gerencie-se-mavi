@@ -61,8 +61,9 @@ export function AddReminder() {
         userID: user?._id || "",
       };
 
-      await fetcher.create(payload);
-      await mutate();
+      await fetcher.create(payload).then(async (res) => {
+        await mutate();
+      });
 
       swalModal({
         icon: "success",
